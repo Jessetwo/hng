@@ -3,7 +3,7 @@ import 'package:hng/button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatelessWidget {
-  final String githubRepo = 'https://github.com/your-username/your-repo';
+  final String githubRepo = 'https://github.com/Jessetwo/HNGlinks';
   final String hngHirePage = 'https://hng.tech/hire';
   final String telex = 'https://hng.tech/telex';
   final String delve = 'https://hng.tech/delve';
