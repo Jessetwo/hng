@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hng/button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatelessWidget {
@@ -6,6 +7,8 @@ class HomePage extends StatelessWidget {
   final String hngHirePage = 'https://hng.tech/hire';
   final String telex = 'https://hng.tech/telex';
   final String delve = 'https://hng.tech/delve';
+
+  const HomePage({super.key});
 
   void _launchURL(String url) async {
     if (await canLaunch(url)) {
@@ -19,7 +22,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'HNG Flutter App',
           style: TextStyle(color: Colors.white),
         ),
@@ -30,24 +33,24 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
-              onPressed: () => _launchURL(githubRepo),
-              child: Text('Go to GitHub Repository'),
+            MyButton(
+              onTap: () => _launchURL(githubRepo),
+              title: ('Go to GitHub Repository'),
             ),
-            SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () => _launchURL(hngHirePage),
-              child: Text('HNG Hire Page'),
+            const SizedBox(height: 10),
+            MyButton(
+              onTap: () => _launchURL(hngHirePage),
+              title: ('HNG Hire Page'),
             ),
-            SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () => _launchURL(telex),
-              child: Text('Telex'),
+            const SizedBox(height: 10),
+            MyButton(
+              onTap: () => _launchURL(telex),
+              title: ('Telex'),
             ),
-            SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () => _launchURL(delve),
-              child: Text('Delve'),
+            const SizedBox(height: 10),
+            MyButton(
+              onTap: () => _launchURL(delve),
+              title: ('Delve'),
             ),
           ],
         ),
