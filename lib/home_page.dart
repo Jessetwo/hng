@@ -1,56 +1,50 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:hng/button.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:hng/button.dart'; // Ensure this file exists
 
 class HomePage extends StatelessWidget {
-  final String githubRepo = 'https://github.com/Jessetwo/HNGlinks';
-  final String hngHirePage = 'https://hng.tech/hire';
-  final String telex = 'https://hng.tech/telex';
-  final String delve = 'https://hng.tech/delve';
-
   const HomePage({super.key});
 
-  void _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
+  // Function to open links using platform-specific methods
+  void openLink(String url) {
+    if (Platform.isAndroid) {
+      Process.start(
+          'am', ['start', '-a', 'android.intent.action.VIEW', '-d', url]);
+    } else if (Platform.isIOS) {
+      Process.start('open', [url]);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'HNG Flutter App',
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.blue,
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('HNG Links')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             MyButton(
-              onTap: () => _launchURL(githubRepo),
-              title: ('Go to GitHub Repository'),
+              title: 'GitHub Repository',
+              url: 'https://github.com/your-repo',
+              onTap: () => openLink('https://github.com/your-repo'),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 20),
             MyButton(
-              onTap: () => _launchURL(hngHirePage),
-              title: ('HNG Hire Page'),
+              title: 'HNG Hire - Flutter Developers',
+              url: 'https://hng.tech/hire/flutter',
+              onTap: () => openLink('https://hng.tech/hire/flutter'),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 20),
             MyButton(
-              onTap: () => _launchURL(telex),
-              title: ('Telex'),
+              title: 'Telex',
+              url: 'https://telex.hng.tech',
+              onTap: () => openLink('https://telex.hng.tech'),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 20),
             MyButton(
-              onTap: () => _launchURL(delve),
-              title: ('Delve'),
+              title: 'Delve',
+              url: 'https://delve.hng.tech',
+              onTap: () => openLink('https://delve.hng.tech'),
             ),
           ],
         ),
