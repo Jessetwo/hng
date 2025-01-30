@@ -1,32 +1,39 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:hng/button.dart'; // Ensure this file exists
+import 'package:flutter/services.dart';
+import 'package:hng/button.dart'; // Import the MyButton widget
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  // Function to open links using platform-specific methods
-  void openLink(String url) {
-    if (Platform.isAndroid) {
-      Process.start(
-          'am', ['start', '-a', 'android.intent.action.VIEW', '-d', url]);
-    } else if (Platform.isIOS) {
-      Process.start('open', [url]);
+  // Function to open links using platform channels
+  Future<void> openLink(String url) async {
+    const platform = MethodChannel('com.example.hnglinks/browser');
+    try {
+      await platform.invokeMethod('openUrl', url);
+    } on PlatformException catch (e) {
+      print('Failed to open URL: ${e.message}');
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('HNG Links')),
+      appBar: AppBar(
+        title: const Text(
+          'HNG Links',
+          style: TextStyle(color: Colors.white),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.blue,
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             MyButton(
               title: 'GitHub Repository',
-              url: 'https://github.com/your-repo',
-              onTap: () => openLink('https://github.com/your-repo'),
+              url: 'https://github.com/Jessetwo/HNGlinks',
+              onTap: () => openLink('https://github.com/Jessetwo/HNGlinks'),
             ),
             const SizedBox(height: 20),
             MyButton(
