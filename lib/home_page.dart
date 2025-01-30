@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart'; // Import the url_launcher package
 import 'package:hng/button.dart'; // Import the MyButton widget
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  // Function to open links using platform channels
+  // Function to open links using url_launcher
   Future<void> openLink(String url) async {
-    const platform = MethodChannel('com.example.hnglinks/browser');
-    try {
-      await platform.invokeMethod('openUrl', url);
-    } on PlatformException catch (e) {
-      print('Failed to open URL: ${e.message}');
+    final Uri uri = Uri.parse(url);
+    if (!await launchUrl(uri)) {
+      throw Exception('Could not launch $url');
     }
   }
 
